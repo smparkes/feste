@@ -1,8 +1,5 @@
 "use strict";
-jazrb.include(jazrb.root + "/spec/lib/feste/spec_helper.js");
-
 (function(){
-
   describe("Feste",function(){
     describe("Class",function(){
 
@@ -31,5 +28,4 @@ jazrb.include(jazrb.root + "/spec/lib/feste/spec_helper.js");
 
     });
   });
-
 }());
