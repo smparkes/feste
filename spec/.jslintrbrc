@@ -16,5 +16,4 @@
               "spyOn",
               "fill_in",
               "click_link",
-              "jazz" ],
-  "withstmt": true }
+              "jazz" ] }
