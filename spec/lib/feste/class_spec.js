@@ -90,7 +90,34 @@
         expect(Cls.prototype.mixin).toBeDefined();
       });
 
-      it("should generate a ctor that calls base calls base class ctor");
+      it("should set the constructor property of the prototype",function(){
+        var Cls = new Feste.Class(function Cls() {
+        });
+        expect(Cls.prototype.constructor).toBe(Cls);
+      });
+
+      it("should set the constructor property of the prototype on classes with bases",function(){
+        var Base = new Feste.Class(function Base() {});
+        var Derived = new Feste.Class(function Dervied() {}, [ Base ]);
+        expect(Derived.prototype.constructor).toBe(Derived);
+      });
+
+      it("should generate a ctor that calls base class ctor", function() {
+        var called = false;
+        var Base = new Feste.Class(function Base() { called = true;});
+        var Derived = new Feste.Class([ Base ]);
+        var derived = new Derived();
+        expect(called).toBe(true);
+      });
+
+      it("should generate a ctor that calls mixin ctors", function() {
+        var called = false;
+        var Base = new Feste.Class();
+        var Mixin = new Feste.Class(function(){ called = true;});
+        var Derived = new Feste.Class([ Base, Mixin ]);
+        var derived = new Derived();
+        expect(called).toBe(true);
+      });
 
       it("should be usable as a base class",function(){
         var Other = {};
