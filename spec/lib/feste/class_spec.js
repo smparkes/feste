@@ -31,14 +31,14 @@
       it("should obey a new top level name w/scope",function(){
         var Other = function Other(){};
         Other.toString = function() {return "Other";};
-        Other.Class = new Feste.Class({},{scope:Other,name:"Class"});
+        Other.Class = new Feste.Class(({}),{scope:Other,name:"Class"});
         expect(Other.Class+"").toBe("Other.Class");
       });
 
       it("should obey a new top level name w/o scope",function(){
         var Other = function Other(){};
         Other.toString = function() {return "Other";};
-        Other.Class = new Feste.Class({},{name:"Class"});
+        Other.Class = new Feste.Class(({}),{name:"Class"});
         expect(Other.Class+"").toBe("Feste.Class");
       });
 
@@ -46,14 +46,14 @@
         var Other = function Other(){};
         var nil;
         Other.toString = function() {return "Other";};
-        Other.Class = new Feste.Class({},{scope:nil, name:"Class"});
+        Other.Class = new Feste.Class(({}),{scope:nil, name:"Class"});
         expect(Other.Class+"").toBe("Class");
       });
 
       it("should obey a new top level name w/a named fn",function(){
         var Other = function Other(){};
         Other.toString = function() {return "Other";};
-        Other.Class = new Feste.Class(function Class(){},{},{scope:Other});
+        Other.Class = new Feste.Class(function Class(){},({}),{scope:Other});
         expect(Other.Class+"").toBe("Other.Class");
       });
 
@@ -63,12 +63,12 @@
       });
 
       it("should add a toString if given a name w/o scope",function() {
-        var Cls = new Feste.Class( {}, {name: "TestName"} );
+        var Cls = new Feste.Class(({}), {name: "TestName"});
         expect(Cls+"").toBe("Feste.TestName");
       });
       
       it("should add a toString if given a name w/nil scope",function() {
-        var Cls = new Feste.Class( {}, {scope: nil, name: "TestName"} );
+        var Cls = new Feste.Class(({}), {scope: nil, name: "TestName"});
         expect(Cls+"").toBe("TestName");
       });
       
@@ -123,7 +123,7 @@
         var Other = {};
         Other.toString = function(){return "Other";};
         var Cls =
-          new Feste.Class( [ Feste.Class ], {
+          new Feste.Class( [ Feste.Class ], ({}), {
             scope: Other,
             name: "Class"
           });
@@ -136,8 +136,8 @@
         Other.Class = new Feste.Class.Subclass(Other);
         Other.Scoped = new Other.Class(function Scoped(){});
         expect(Other.Scoped+"").toBe("Other.Scoped");
-        Other.Scoped = new Other.Class({}, {name: "Scoped"});
-        expect(Other.Scoped+"").toBe("Other.Scoped");
+        Other.Scoped = new Other.Class(({a:"b"}), {name: "XScoped"});
+        expect(Other.Scoped+"").toBe("Other.XScoped");
       });
 
       it("derived classes should be subscopeable",function(){
