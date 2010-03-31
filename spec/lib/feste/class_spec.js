@@ -134,6 +134,7 @@
         var Other = {};
         Other.toString = function(){return "Other";};
         Other.Class = new Feste.Class.Subclass(Other);
+        expect(Other.Class+"").toBe("Other.Class");
         Other.Scoped = new Other.Class(function Scoped(){});
         expect(Other.Scoped+"").toBe("Other.Scoped");
         Other.Scoped = new Other.Class(({a:"b"}), {name: "XScoped"});
