@@ -156,6 +156,33 @@
         expect(Other.Scoped.Nested.More+"").toBe("Other.Scoped.Nested.More");
       });
 
+      it("should not set constructor/tostring from base or mixins", function(){
+        var Base = new Feste.Class(function Base(){});
+        var Mixin = new Feste.Class(function Mixin(){});
+        var Cls = new Feste.Class(function Cls(){}, [ Base, Mixin ]);
+        expect(Cls+"").toBe("Feste.Cls");
+        expect((new Cls()).constructor+"").toBe("Feste.Cls");
+      });
+
+      it("should not set constructor/tostring from base or mixins with multiple levels", function(){
+        var Mixin1 = new Feste.Class(function Mixin1(){});
+        expect(Mixin1+"").toBe("Feste.Mixin1");
+        var Base = new Feste.Class(function Base(){}, [ Mixin1 ]);
+        var Mixin2 = new Feste.Class(function Mixin2(){});
+        var Cls = new Feste.Class(function Cls(){}, [ Base, Mixin2 ]);
+        expect(Cls+"").toBe("Feste.Cls");
+        expect((new Cls()).constructor+"").toBe("Feste.Cls");
+      });
+
+      it("should not set constructor/tostring from mixins w/bases", function(){
+        var Base = new Feste.Class(function Base(){});
+        var MixBase = new Feste.Class(function MixBase(){});
+        var Mixin = new Feste.Class(function Mixin(){}, [ MixBase ]);
+        var Cls = new Feste.Class(function Cls(){}, [ Base, Mixin ]);
+        expect(Cls+"").toBe("Feste.Cls");
+        expect((new Cls()).constructor+"").toBe("Feste.Cls");
+      });
+
     });
   });
 }());
